@@ -26,3 +26,14 @@ body {
     margin-top: 20px;
     text-align: left;
 }
+
+.box {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #000000;
+    color: white;
+    text-decoration: none;
+    border-radius: 22px;
+    border: 2px;
+    margin: 2px 1px;
+  }

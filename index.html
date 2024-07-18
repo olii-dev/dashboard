@@ -2,25 +2,22 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
         <meta charset="UTF-8">
         <title>Dashboard</title>
         <link rel="shortcut icon" type="images/x-icon" href="images/github-icon.png">
         <link type="text/css" rel="stylesheet" href="css/styles.css" />
-        <link rel="stylesheet"
-                href="https://fonts.googleapis.com/css?family=Roboto+Mono">
-                
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
     </head>
     <body>
         <div class="floating-card">
             <h1 style="text-align: left;">Hey Oli!</h1>
-            <h2 style="font-size: 16px; text-align: left;"><b>The time:</b></h2>
+            <h2 style="font-size: 16px; text-align: left;"><b>The time</b></h2>
             <p style="text-align: left;" id="time">Time</p>
             
-                <div class="stats-section">
-                    <h2>Stats</h2>
-                    <p>Here I will add my activities and stats</p>
-                </div>
+            <div class="stats-section">
+                <h2>Stats</h2>
+                <p>Here I will add my activities and stats</p>
+            </div>
             
             <div class="weather-section">
                 <h2>Weather</h2>
@@ -28,18 +25,20 @@
             </div>
             
             <div class="quote-section">
-                <h2>Motivational Quote</h2>
-                <p id="quote">Quote will show here</p>
+                <h2>Quote of the day</h2>
+                <p id="quote">Quotes cannot load.. whats a quote<br>uhh keep it up?!<br>that'll have to do until its fixed</p>
             </div>
             
             <div class="tasks-section">
                 <h2>To-Do List</h2>
-                <ul id="tasks">
-                    <li>Finish my Dashboard</li>
-                </ul>
+                <input class="box" type="text" id="taskInput" placeholder="Add a task">
+                <a class="box" onclick="addTask()">Add</a>
+                <ul id="tasks"></ul>
             </div>
         </div>
-
+ 
+        <script src="quotes.js"></script>
         <script src="script.js"></script>
+        <p style="text-align: bottom; color: black;">Hours spent making this project: 2</p>
     </body>
 </html>
