@@ -15,29 +15,38 @@
                 <p id="time" style="margin: 0;"></p>
             </div>
             
-            <div class="stats-section">
-                <h2>Stats</h2>
-                <p>Here I will add my activities and stats</p>
+            <div class="card-row">
+                <div style="text-align: center;" class="card websites-card">
+                    <h2>Websites you might need!</h2>
+            <a class="box" href="https://www.jbhifi.com.au/" target="_blank">JB Hi-Fi</a>
+            <a class="box" href="https://chatgpt.com" target="_blank">ChatGPT</a>
+                </div>
+
+                <div style="text-align: center;" class="card time-spent-card">
+                    <h2>Time spent coding</h2>
+                    <p style="font-size: 13px;"><b>(Since creation of this website 20/07/24)</b></p>
+                    <p id="timeSpentCoding"></p>
+                </div>
             </div>
-            
-            <div style="text-align: left;">
-                <h2>Time spent coding</h2>
-                <p style="font-size: 13px;"><b>(Since creation of this website 20/07/24)</b></p>
-                <p id="timeSpentCoding"></p>
+
+            <hr class="break">
+
+            <div class="card-row">
+                <div class="card weather-card">
+                    <h2 style="text-align: center;">Weather</h2>
+                    <a class="weatherwidget-io" href="https://forecast7.com/en/n34d93138d60/adelaide/" data-label_1="Adelaide" data-icons="Climacons Animated" data-mode="Current" data-days="3" data-theme="pure">Adelaide</a>
+                    <script src="weather.js"></script>
+                </div>
+                
+                <div class="card quote-card">
+                    <h2 style="text-align: center;">Quote of the day</h2>
+                    <p style="text-align: center;" id="quote" >Quotes cannot load.. whats a quote<br>uhh keep it up?!<br>that'll have to do until its fixed</p>
+                </div>
             </div>
-            
-            <div class="weather-section">
-                <h2>Weather</h2>
-                <a class="weatherwidget-io" href="https://forecast7.com/en/n34d93138d60/adelaide/" data-label_1="Adelaide" data-icons="Climacons Animated" data-mode="Current" data-days="3" data-theme="pure" >Adelaide</a>
-                <script src="weather.js"></script>
-            </div>
-            
-            <div class="quote-section">
-                <h2>Quote of the day</h2>
-                <p id="quote">Quotes cannot load.. whats a quote<br>uhh keep it up?!<br>that'll have to do until its fixed</p>
-            </div>
-            
-            <div class="tasks-section">
+
+            <hr class="break">
+
+            <div style="text-align: center;" class="card tasks-card">
                 <h2>To-Do List</h2>
                 <input class="box" type="text" id="taskInput" placeholder="Add a task">
                 <a class="box" onclick="addTask()">Add</a>
@@ -47,6 +56,5 @@
  
         <script src="quotes.js"></script>
         <script src="script.js"></script>
-        <p style="text-align: bottom; color: black;">Hours spent making this project: 2</p>
     </body>
 </html>
