@@ -38,12 +38,31 @@ body {
 
 .header {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 5px;
 }
+
 .header h1 {
     margin: 0;
 }
+
+.time-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.header p {
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
 
 .box {
     display: inline-block;
@@ -60,6 +79,15 @@ body {
     max-height: 200px;
     overflow-y: auto;
 }
+
+.break {
+    width:50%;
+    text-align:left;
+    margin-left:0;
+    height:2px;
+    border-width:0;
+    background-color:rgb(255, 255, 255)
+  }
 
 @media (max-width: 1200px) {
     .floating-card {

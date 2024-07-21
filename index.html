@@ -1,60 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="UTF-8">
-        <title>Dashboard</title>
-        <link rel="shortcut icon" type="images/x-icon" href="images/github-icon.png">
-        <link type="text/css" rel="stylesheet" href="css/styles.css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
-    </head>
-    <body>
-        <div class="floating-card">
-            <div class="header">
-                <h1 style="text-align: left;">Hey Oli!</h1>
-                <p id="time" style="margin: 0;"></p>
-            </div>
-            
-            <div class="card-row">
-                <div style="text-align: center;" class="card websites-card">
-                    <h2>Websites you might need!</h2>
-            <a class="box" href="https://www.jbhifi.com.au/" target="_blank">JB Hi-Fi</a>
-            <a class="box" href="https://chatgpt.com" target="_blank">ChatGPT</a>
-                </div>
-
-                <div style="text-align: center;" class="card time-spent-card">
-                    <h2>Time spent coding</h2>
-                    <p style="font-size: 13px;"><b>(Since creation of this website 20/07/24)</b></p>
-                    <p id="timeSpentCoding"></p>
-                </div>
-            </div>
-
-            <hr class="break">
-
-            <div class="card-row">
-                <div class="card weather-card">
-                    <h2 style="text-align: center;">Weather</h2>
-                    <a class="weatherwidget-io" href="https://forecast7.com/en/n34d93138d60/adelaide/" data-label_1="Adelaide" data-icons="Climacons Animated" data-mode="Current" data-days="3" data-theme="pure">Adelaide</a>
-                    <script src="weather.js"></script>
-                </div>
-                
-                <div class="card quote-card">
-                    <h2 style="text-align: center;">Quote of the day</h2>
-                    <p style="text-align: center;" id="quote" >Quotes cannot load.. whats a quote<br>uhh keep it up?!<br>that'll have to do until its fixed</p>
-                </div>
-            </div>
-
-            <hr class="break">
-
-            <div style="text-align: center;" class="card tasks-card">
-                <h2>To-Do List</h2>
-                <input class="box" type="text" id="taskInput" placeholder="Add a task">
-                <a class="box" onclick="addTask()">Add</a>
-                <ul id="tasks"></ul>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="shortcut icon" type="images/x-icon" href="images/github-icon.png">
+    <link type="text/css" rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+</head>
+<body>
+    <div class="floating-card">
+        <div class="header">
+            <h1>Hey Oli!</h1>
+            <div class="time-info">
+                <p id="time"></p>
+                <p id="timeUntil"></p>
             </div>
         </div>
- 
-        <script src="quotes.js"></script>
-        <script src="script.js"></script>
-    </body>
+        
+        <div class="card-row">
+            <div style="text-align: center;" class="card websites-card">
+                <h2>Websites you might need!</h2>
+                <a class="box" href="https://www.jbhifi.com.au/" target="_blank">JB Hi-Fi</a>
+                <a class="box" href="https://chatgpt.com" target="_blank">ChatGPT</a>
+                <a class="box" href="https://github.com" target="_blank">GitHub</a>
+            </div>
+
+            <div style="text-align: center;" class="card time-spent-card">
+                <h2>Time spent coding</h2>
+                <p style="font-size: 13px;"><b>(Since creation of this website 20/07/24)</b></p>
+                <p id="timeSpentCoding"></p>
+            </div>
+        </div>
+
+        <hr class="break">
+
+        <div class="card-row">
+            <div class="card weather-card">
+                <h2 style="text-align: center;">Weather</h2>
+                <a class="weatherwidget-io" href="https://forecast7.com/en/n34d93138d60/adelaide/" data-label_1="Adelaide" data-icons="Climacons Animated" data-mode="Current" data-days="3" data-theme="pure">Adelaide</a>
+                <script src="weather.js"></script>
+            </div>
+            
+            <div class="card quote-card">
+                <h2 style="text-align: center;">Quote of the day</h2>
+                <br>
+                <p style="text-align: center;" id="quote">Quotes cannot load.. whats a quote<br>uhh keep it up?!<br>that'll have to do until its fixed</p>
+            </div>
+        </div>
+
+        <hr class="break">
+
+        <div style="text-align: center;" class="card tasks-card">
+            <h2>To-Do List</h2>
+            <input class="box" type="text" id="taskInput" placeholder="Add a task">
+            <a class="box" onclick="addTask()">Add</a>
+            <ul id="tasks"></ul>
+        </div>
+    </div>
+
+    <script src="quotes.js"></script>
+    <script src="script.js"></script>
+</body>
 </html>

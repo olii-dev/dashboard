@@ -12,7 +12,6 @@ function displayRandomQuote() {
     const quote = quotes[dayOfYear % quotes.length];
     document.getElementById('quote').textContent = quote;
 }
-
 displayRandomQuote();
 
 function saveTasks(tasks) {
@@ -60,6 +59,7 @@ function removeTask(taskText) {
 document.addEventListener('DOMContentLoaded', () => {
     renderTasks();
     fetchTimeSpentCoding();
+    updateTimeUntil();
 });
 
 function fetchTimeSpentCoding() {
@@ -72,4 +72,51 @@ function fetchTimeSpentCoding() {
             console.error('Error fetching time spent coding:', error);
             document.getElementById('timeSpentCoding').textContent = 'Could not load time spent coding data.';
         });
+}
+
+function updateTimeUntil() {
+    const sunsetHour = 17;
+    const sunsetMinute = 15;
+    const sunriseHour = 7;
+    const sunriseMinute = 10;
+    const now = new Date();
+    const sunsetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunsetHour, sunsetMinute);
+    const sunriseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunriseHour, sunriseMinute);
+
+    if (now > sunsetTime) {
+        sunsetTime.setDate(sunsetTime.getDate() + 1);
+    }
+    if (now > sunriseTime) {
+        sunriseTime.setDate(sunriseTime.getDate() + 1);
+    }
+
+    setInterval(() => {
+        const now = new Date();
+        if (now > sunsetTime) {
+            // Show time until sunrise
+            const timeUntilSunrise = sunriseTime - now;
+            if (timeUntilSunrise > 0) {
+                const hours = Math.floor(timeUntilSunrise / 1000 / 60 / 60);
+                const minutes = Math.floor((timeUntilSunrise / 1000 / 60) % 60);
+                const seconds = Math.floor((timeUntilSunrise / 1000) % 60);
+                document.getElementById('timeUntil').textContent = `Time till sunrise: ${hours}h ${minutes}m ${seconds}s`;
+                document.getElementById('timeUntil').classList.remove('hidden');
+            } else {
+                document.getElementById('timeUntil').textContent = 'The sun has risen.';
+                document.getElementById('timeUntil').classList.add('hidden');
+            }
+        } else {
+            const timeUntilSunset = sunsetTime - now;
+            if (timeUntilSunset > 0) {
+                const hours = Math.floor(timeUntilSunset / 1000 / 60 / 60);
+                const minutes = Math.floor((timeUntilSunset / 1000 / 60) % 60);
+                const seconds = Math.floor((timeUntilSunset / 1000) % 60);
+                document.getElementById('timeUntil').textContent = `Time till sunset: ${hours}h ${minutes}m ${seconds}s`;
+                document.getElementById('timeUntil').classList.remove('hidden');
+            } else {
+                document.getElementById('timeUntil').textContent = 'The sun has set.';
+                document.getElementById('timeUntil').classList.add('hidden');
+            }
+        }
+    }, 1000);
 }
