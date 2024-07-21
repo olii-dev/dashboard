@@ -14,7 +14,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 400px;
+    width: 450px;
     text-align: center;
     position: absolute;
 }
@@ -37,3 +37,17 @@ body {
     border: 2px;
     margin: 2px 1px;
   }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header h1 {
+    margin: 0;
+}
+
+.tasks-section {
+    max-height: 200px;
+    overflow-y: auto;
+}

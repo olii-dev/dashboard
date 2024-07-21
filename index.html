@@ -10,23 +10,26 @@
     </head>
     <body>
         <div class="floating-card">
-            <h1 style="text-align: left;">Hey Oli!</h1>
-            <h2 style="font-size: 16px; text-align: left;"><b>The time</b></h2>
-            <p style="text-align: left;" id="time">Time</p>
+            <div class="header">
+                <h1 style="text-align: left;">Hey Oli!</h1>
+                <p id="time" style="margin: 0;"></p>
+            </div>
             
             <div class="stats-section">
                 <h2>Stats</h2>
                 <p>Here I will add my activities and stats</p>
             </div>
             
-            <div style="text-align: left;" class=",moc-section">
-                <h2>Minutes of Code Written</h2>
-                <p id="moc">Loading...</p>
+            <div style="text-align: left;">
+                <h2>Time spent coding</h2>
+                <p style="font-size: 13px;"><b>(Since creation of this website 20/07/24)</b></p>
+                <p id="timeSpentCoding"></p>
             </div>
             
             <div class="weather-section">
                 <h2>Weather</h2>
-                <p>I will add weather information here</p>
+                <a class="weatherwidget-io" href="https://forecast7.com/en/n34d93138d60/adelaide/" data-label_1="Adelaide" data-icons="Climacons Animated" data-mode="Current" data-days="3" data-theme="pure" >Adelaide</a>
+                <script src="weather.js"></script>
             </div>
             
             <div class="quote-section">

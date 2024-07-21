@@ -59,29 +59,17 @@ function removeTask(taskText) {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderTasks();
-    renderMOC();
+    fetchTimeSpentCoding();
 });
 
-function renderMOC() {
-    const apiKey = '';
-    const url = `https://wakatime.com/api/v1/users/current/stats/last_7_days?api_key=${apiKey}`;
-
-    fetch(url)
-        .then(response => {
-            console.log('Response:', response);
-            return response.json();
-        })
+function fetchTimeSpentCoding() {
+    fetch('time-coding.json')
+        .then(response => response.json())
         .then(data => {
-            console.log('Data:', data);
-            if (data.data && data.data.languages) {
-                const minutes = data.data.languages.reduce((acc, language) => acc + (language.total_seconds / 60), 0).toFixed(2);
-                document.getElementById('moc').textContent = `${minutes} minutes of coding in the last 7 days`;
-            } else {
-                document.getElementById('moc').textContent = 'MOC data failed to load :(';
-            }
+            document.getElementById('timeSpentCoding').textContent = data.Time;
         })
         .catch(error => {
-            console.error('Error fetching MOC data:', error);
-            document.getElementById('moc').textContent = 'MOC data failed to load :(';
+            console.error('Error fetching time spent coding:', error);
+            document.getElementById('timeSpentCoding').textContent = 'Could not load time spent coding data.';
         });
 }
