@@ -48,4 +48,18 @@ const quotes = [
     "The best revenge is massive success.",
     "Start where you are. Use what you have. Do what you can.",
     "It does not matter how slowly you go as long as you do not stop.",
+    "Act as if what you do makes a difference. It does.",
+    "The only way to do great work is to love what you do.",
+    "The journey of a thousand miles begins with one step.",
+    "Everything you can imagine is real.",
+    "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
+    "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart.",
+    "You are never too old to set another goal or to dream a new dream.",
+    "Your time is limited, don’t waste it living someone else’s life.",
+    "If you want to achieve greatness stop asking for permission.",
+    "The only person you are destined to become is the person you decide to be.",
+    "The harder you work for something, the greater you’ll feel when you achieve it.",
+    "Dream it. Wish it. Do it.",
+    "Success doesn’t just find you. You have to go out and get it.",
+    "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart."
 ];

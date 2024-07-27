@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTasks();
     fetchTimeSpentCoding();
     updateTimeUntil();
+    loadTimer();
 });
 
 function fetchTimeSpentCoding() {
@@ -93,7 +94,6 @@ function updateTimeUntil() {
     setInterval(() => {
         const now = new Date();
         if (now > sunsetTime) {
-            // Show time until sunrise
             const timeUntilSunrise = sunriseTime - now;
             if (timeUntilSunrise > 0) {
                 const hours = Math.floor(timeUntilSunrise / 1000 / 60 / 60);
@@ -119,4 +119,78 @@ function updateTimeUntil() {
             }
         }
     }, 1000);
+}
+
+function searchGoogle() {
+    const searchInput = document.getElementById('searchInput').value.trim();
+    if (searchInput !== "") {
+        const url = `https://www.google.com/search?q=${encodeURIComponent(searchInput)}`;
+        window.open(url, '_blank');
+    }
+}
+
+function startTimer() {
+    const timerName = document.getElementById('timerName').value.trim();
+    const minutes = parseInt(document.getElementById('timerMinutes').value, 10) || 0;
+    const seconds = parseInt(document.getElementById('timerSeconds').value, 10) || 0;
+    let totalTime = minutes * 60 + seconds;
+
+    if (totalTime > 0) {
+        const timerData = {
+            name: timerName,
+            totalTime: totalTime,
+            endTime: Date.now() + totalTime * 1000
+        };
+        localStorage.setItem('timer', JSON.stringify(timerData));
+        updateTimerDisplay(timerData);
+        timer = setInterval(() => {
+            const now = Date.now();
+            const remainingTime = timerData.endTime - now;
+            if (remainingTime <= 0) {
+                clearInterval(timer);
+                alert('Timer is complete!');
+                localStorage.removeItem('timer');
+                document.getElementById('timerDisplay').textContent = 'Timer ended.';
+            } else {
+                timerData.totalTime = Math.floor(remainingTime / 1000);
+                localStorage.setItem('timer', JSON.stringify(timerData));
+                updateTimerDisplay(timerData);
+            }
+        }, 1000);
+    }
+}
+
+function updateTimerDisplay(timerData) {
+    const displayMinutes = Math.floor(timerData.totalTime / 60);
+    const displaySeconds = timerData.totalTime % 60;
+    document.getElementById('timerDisplay').textContent = `Time remaining for ${timerData.name ? timerData.name + ': ' : ''}${displayMinutes}m ${displaySeconds}s`;
+}
+
+function loadTimer() {
+    const timerData = JSON.parse(localStorage.getItem('timer'));
+    if (timerData) {
+        const now = Date.now();
+        const remainingTime = timerData.endTime - now;
+        if (remainingTime > 0) {
+            timerData.totalTime = Math.floor(remainingTime / 1000);
+            timer = setInterval(() => {
+                const now = Date.now();
+                const remainingTime = timerData.endTime - now;
+                if (remainingTime <= 0) {
+                    clearInterval(timer);
+                    alert('Timer is complete!');
+                    localStorage.removeItem('timer');
+                    document.getElementById('timerDisplay').textContent = 'Timer ended.';
+                } else {
+                    timerData.totalTime = Math.floor(remainingTime / 1000);
+                    localStorage.setItem('timer', JSON.stringify(timerData));
+                    updateTimerDisplay(timerData);
+                }
+            }, 1000);
+            updateTimerDisplay(timerData);
+        } else {
+            localStorage.removeItem('timer');
+            document.getElementById('timerDisplay').textContent = 'Timer ended.';
+        }
+    }
 }

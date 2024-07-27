@@ -41,7 +41,15 @@
                 <a class="weatherwidget-io" href="https://forecast7.com/en/n34d93138d60/adelaide/" data-label_1="Adelaide" data-icons="Climacons Animated" data-mode="Current" data-days="3" data-theme="pure">Adelaide</a>
                 <script src="weather.js"></script>
             </div>
-            
+
+            <div class="search-wrapper">
+                <div class="card search-card">
+                    <h2 style="text-align: center;">Search the web</h2>
+                    <input class="box" type="text" id="searchInput" placeholder="Search Google">
+                    <a class="box" onclick="searchGoogle()">Search</a>
+                </div>
+            </div>
+
             <div class="card quote-card">
                 <h2 style="text-align: center;">Quote of the day</h2>
                 <br>
@@ -51,11 +59,22 @@
 
         <hr class="break">
 
-        <div style="text-align: center;" class="card tasks-card">
-            <h2>To-Do List</h2>
-            <input class="box" type="text" id="taskInput" placeholder="Add a task">
-            <a class="box" onclick="addTask()">Add</a>
-            <ul id="tasks"></ul>
+        <div class="card-row">
+            <div style="text-align: center;" class="card tasks-card">
+                <h2>To-Do List</h2>
+                <input class="box" type="text" id="taskInput" placeholder="Add a task">
+                <a class="box" onclick="addTask()">Add</a>
+                <ul id="tasks"></ul>
+            </div>
+
+            <div style="text-align: center;" class="card timer-card">
+                <h2>Set a Timer</h2>
+                <input class="box" type="text" id="timerName" placeholder="Timer Name">
+                <input class="box" type="number" id="timerMinutes" placeholder="Minutes">
+                <input class="box" type="number" id="timerSeconds" placeholder="Seconds">
+                <a class="box" onclick="startTimer()">Start Timer</a>
+                <p id="timerDisplay"></p>
+            </div>
         </div>
     </div>
 
