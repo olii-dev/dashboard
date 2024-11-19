@@ -89,6 +89,33 @@ body {
     background-color:rgb(255, 255, 255)
   }
 
+
+#newsFeed {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#newsList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#newsList li {
+    margin: 10px 0;
+}
+
+#newsList a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+#newsList a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 1200px) {
     .floating-card {
         width: 95%;

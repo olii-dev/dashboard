@@ -75,52 +75,6 @@ function fetchTimeSpentCoding() {
         });
 }
 
-function updateTimeUntil() {
-    const sunsetHour = 17;
-    const sunsetMinute = 15;
-    const sunriseHour = 7;
-    const sunriseMinute = 10;
-    const now = new Date();
-    const sunsetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunsetHour, sunsetMinute);
-    const sunriseTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), sunriseHour, sunriseMinute);
-
-    if (now > sunsetTime) {
-        sunsetTime.setDate(sunsetTime.getDate() + 1);
-    }
-    if (now > sunriseTime) {
-        sunriseTime.setDate(sunriseTime.getDate() + 1);
-    }
-
-    setInterval(() => {
-        const now = new Date();
-        if (now > sunsetTime) {
-            const timeUntilSunrise = sunriseTime - now;
-            if (timeUntilSunrise > 0) {
-                const hours = Math.floor(timeUntilSunrise / 1000 / 60 / 60);
-                const minutes = Math.floor((timeUntilSunrise / 1000 / 60) % 60);
-                const seconds = Math.floor((timeUntilSunrise / 1000) % 60);
-                document.getElementById('timeUntil').textContent = `Time till sunrise: ${hours}h ${minutes}m ${seconds}s`;
-                document.getElementById('timeUntil').classList.remove('hidden');
-            } else {
-                document.getElementById('timeUntil').textContent = 'The sun has risen.';
-                document.getElementById('timeUntil').classList.add('hidden');
-            }
-        } else {
-            const timeUntilSunset = sunsetTime - now;
-            if (timeUntilSunset > 0) {
-                const hours = Math.floor(timeUntilSunset / 1000 / 60 / 60);
-                const minutes = Math.floor((timeUntilSunset / 1000 / 60) % 60);
-                const seconds = Math.floor((timeUntilSunset / 1000) % 60);
-                document.getElementById('timeUntil').textContent = `Time till sunset: ${hours}h ${minutes}m ${seconds}s`;
-                document.getElementById('timeUntil').classList.remove('hidden');
-            } else {
-                document.getElementById('timeUntil').textContent = 'The sun has set.';
-                document.getElementById('timeUntil').classList.add('hidden');
-            }
-        }
-    }, 1000);
-}
-
 function searchGoogle() {
     const searchInput = document.getElementById('searchInput').value.trim();
     if (searchInput !== "") {
@@ -194,3 +148,66 @@ function loadTimer() {
         }
     }
 }
+
+function getTimeUntilSunset() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&formatted=0`)
+                .then(response => response.json())
+                .then(data => {
+                    const sunsetTimeUTC = new Date(data.results.sunset);
+                    const currentTime = new Date();
+
+                    const sunsetTimeLocal = new Date(sunsetTimeUTC.toLocaleString("en-US", { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }));
+
+                    const diff = sunsetTimeLocal - currentTime;
+                    if (diff > 0) {
+                        const hours = Math.floor(diff / (1000 * 60 * 60));
+                        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                        document.getElementById("timeUntil").textContent = `Time until sunset: ${hours}h ${minutes}m`;
+                    } else {
+                        document.getElementById("timeUntil").textContent = `Sunset has passed.`;
+                    }
+                })
+                .catch(err => console.error("Error fetching sunset data:", err));
+        });
+    } else {
+        document.getElementById("timeUntil").textContent = "Geolocation not supported.";
+    }
+}
+
+getTimeUntilSunset();
+setInterval(getTimeUntilSunset, 60000);
+
+function fetchLatestNews(category = 'technology') {
+    const apiKey = 'pub_5968200e94f970c07107743b6a2204c9e41ba';
+    const url = `https://newsdata.io/api/1/news?apikey=${apiKey}&country=au&category=${category}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const newsList = document.getElementById('newsList');
+            if (data.results && data.results.length > 0) {
+                newsList.innerHTML = '';
+                const limitedResults = data.results.slice(0, 3);
+                limitedResults.forEach(article => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `<a href="${article.link}" target="_blank">${article.title}</a>`;
+                    newsList.appendChild(listItem);
+                });
+            } else {
+                newsList.textContent = 'No news avaliable at the moment.';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching news:', error);
+            document.getElementById('newsList').textContent = 'Could not load news data.';
+        });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchLatestNews('technology');
+});
