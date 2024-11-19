@@ -169,7 +169,7 @@ function getTimeUntilSunset() {
                         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                         document.getElementById("timeUntil").textContent = `Time until sunset: ${hours}h ${minutes}m`;
                     } else {
-                        document.getElementById("timeUntil").textContent = `Sunset has passed.`;
+                        document.getElementById("timeUntil").textContent = `Sunset has happened.`;
                     }
                 })
                 .catch(err => console.error("Error fetching sunset data:", err));
@@ -211,3 +211,46 @@ function fetchLatestNews(category = 'technology') {
 document.addEventListener('DOMContentLoaded', () => {
     fetchLatestNews('technology');
 });
+
+function fetchAndDisplayNews(category = 'technology') {
+    const apiKey = 'pub_5968200e94f970c07107743b6a2204c9e41ba';
+    const url = `https://newsdata.io/api/1/news?apikey=${apiKey}&country=au&category=${category}`;
+
+    // Check if news should be updated (every 2 hours)
+    const lastUpdateTime = localStorage.getItem('lastNewsUpdateTime');
+    const now = new Date().getTime();
+    const twoHoursInMilliseconds = 2 * 60 * 60 * 1000;
+
+    if (!lastUpdateTime || now - lastUpdateTime >= twoHoursInMilliseconds) {
+        localStorage.setItem('lastNewsUpdateTime', now);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const newsList = document.getElementById('newsList');
+                newsList.innerHTML = '';
+                if (data.results && data.results.length > 0) {
+                    const limitedResults = data.results.slice(0, 3);
+                    limitedResults.forEach(article => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `<a href="${article.link}" target="_blank">${article.title}</a>`;
+                        newsList.appendChild(listItem);
+                    });
+                } else {
+                    newsList.textContent = 'No news available at the moment.';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching news:', error);
+                document.getElementById('newsList').textContent = 'Could not load news data.';
+            });
+    }
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAndDisplayNews('technology');
+});
+
+// Call every 2 hours
+setInterval(() => fetchAndDisplayNews('technology'), 2 * 60 * 60 * 1000);

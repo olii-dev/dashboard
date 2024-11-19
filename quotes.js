@@ -27,7 +27,7 @@ const quotes = [
     "The only limit to our realization of tomorrow is our doubts of today.",
     "The only way to do great work is to love what you do.",
     "The best way to predict the future is to create it.",
-    "Yesterday is the past, tomorrow is the future, that's why today is the present",
+    "Yesterday is the past, tomorrow is the future, that's why today is the present.",
     "Success is not how high you have climbed, but how you make a positive difference to the world.",
     "The only place where success comes before work is in the dictionary.",
     "Hardships often prepare ordinary people for an extraordinary destiny.",
@@ -61,5 +61,18 @@ const quotes = [
     "The harder you work for something, the greater you’ll feel when you achieve it.",
     "Dream it. Wish it. Do it.",
     "Success doesn’t just find you. You have to go out and get it.",
-    "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart."
+    "Don’t be pushed around by the fears in your mind. Be led by the dreams in your heart.",
+    "The best time to plant a tree was 20 years ago. The second best time is now.",
+    "You don't have to be great to start, but you have to start to be great.",
+    "The only way to do great work is to love what you do.",
+    "Success is the sum of small efforts, repeated day in and day out.",
+    "Your future is created by what you do today, not tomorrow.",
+    "What you get by achieving your goals is not as important as what you become by achieving your goals.",
+    "Success doesn't come from what you do occasionally, it comes from what you do consistently.",
+    "Act as if what you do makes a difference. It does.",
+    "The key to success is to focus on goals, not obstacles.",
+    "Success is not the absence of failure; it's the persistence through failure.",
+    "The only way to achieve the impossible is to believe it is possible.",
+    "Don’t limit your challenges. Challenge your limits.",
+    "If you can dream it, you can achieve it."
 ];
