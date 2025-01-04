@@ -58,22 +58,9 @@ function removeTask(taskText) {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderTasks();
-    fetchTimeSpentCoding();
     updateTimeUntil();
-    loadTimer();
+    loadTimers();
 });
-
-function fetchTimeSpentCoding() {
-    fetch('time-coding.json')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('timeSpentCoding').textContent = data.Time;
-        })
-        .catch(error => {
-            console.error('Error fetching time spent coding:', error);
-            document.getElementById('timeSpentCoding').textContent = 'Could not load time spent coding data.';
-        });
-}
 
 function searchGoogle() {
     const searchInput = document.getElementById('searchInput').value.trim();
@@ -82,6 +69,8 @@ function searchGoogle() {
         window.open(url, '_blank');
     }
 }
+
+let timers = [];
 
 function startTimer() {
     const timerName = document.getElementById('timerName').value.trim();
@@ -95,19 +84,21 @@ function startTimer() {
             totalTime: totalTime,
             endTime: Date.now() + totalTime * 1000
         };
-        localStorage.setItem('timer', JSON.stringify(timerData));
+        timers.push(timerData);
+        saveTimers();
         updateTimerDisplay(timerData);
-        timer = setInterval(() => {
+
+        const timerInterval = setInterval(() => {
             const now = Date.now();
             const remainingTime = timerData.endTime - now;
             if (remainingTime <= 0) {
-                clearInterval(timer);
-                alert('Timer is complete!');
-                localStorage.removeItem('timer');
+                clearInterval(timerInterval);
+                alert(`'${timerData.name}' timer is complete!`);
+                removeTimer(timerData);
                 document.getElementById('timerDisplay').textContent = 'Timer ended.';
             } else {
                 timerData.totalTime = Math.floor(remainingTime / 1000);
-                localStorage.setItem('timer', JSON.stringify(timerData));
+                saveTimers();
                 updateTimerDisplay(timerData);
             }
         }, 1000);
@@ -120,33 +111,34 @@ function updateTimerDisplay(timerData) {
     document.getElementById('timerDisplay').textContent = `Time remaining for ${timerData.name ? timerData.name + ': ' : ''}${displayMinutes}m ${displaySeconds}s`;
 }
 
-function loadTimer() {
-    const timerData = JSON.parse(localStorage.getItem('timer'));
-    if (timerData) {
-        const now = Date.now();
-        const remainingTime = timerData.endTime - now;
-        if (remainingTime > 0) {
-            timerData.totalTime = Math.floor(remainingTime / 1000);
-            timer = setInterval(() => {
-                const now = Date.now();
-                const remainingTime = timerData.endTime - now;
-                if (remainingTime <= 0) {
-                    clearInterval(timer);
-                    alert('Timer is complete!');
-                    localStorage.removeItem('timer');
-                    document.getElementById('timerDisplay').textContent = 'Timer ended.';
-                } else {
-                    timerData.totalTime = Math.floor(remainingTime / 1000);
-                    localStorage.setItem('timer', JSON.stringify(timerData));
-                    updateTimerDisplay(timerData);
-                }
-            }, 1000);
+function saveTimers() {
+    localStorage.setItem('timers', JSON.stringify(timers));
+}
+
+function loadTimers() {
+    const savedTimers = JSON.parse(localStorage.getItem('timers'));
+    if (savedTimers) {
+        timers = savedTimers;
+        timers.forEach(timerData => {
             updateTimerDisplay(timerData);
-        } else {
-            localStorage.removeItem('timer');
-            document.getElementById('timerDisplay').textContent = 'Timer ended.';
-        }
+        });
     }
+}
+
+function removeTimer(timerData) {
+    timers = timers.filter(timer => timer !== timerData);
+    saveTimers();
+    renderTimers();
+}
+
+function renderTimers() {
+    const timerList = document.getElementById('timerList');
+    timerList.innerHTML = '';
+    timers.forEach(timerData => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `Timer: ${timerData.name}, Time remaining: ${Math.floor(timerData.totalTime / 60)}m ${timerData.totalTime % 60}s`;
+        timerList.appendChild(listItem);
+    });
 }
 
 function getTimeUntilSunset() {
@@ -199,7 +191,7 @@ function fetchLatestNews(category = 'technology') {
                     newsList.appendChild(listItem);
                 });
             } else {
-                newsList.textContent = 'No news avaliable at the moment.';
+                newsList.textContent = 'No news available at the moment.';
             }
         })
         .catch(error => {
@@ -216,7 +208,7 @@ function fetchAndDisplayNews(category = 'technology') {
     const apiKey = 'pub_5968200e94f970c07107743b6a2204c9e41ba';
     const url = `https://newsdata.io/api/1/news?apikey=${apiKey}&country=au&category=${category}`;
 
-    // Check if news should be updated (every 2 hours)
+
     const lastUpdateTime = localStorage.getItem('lastNewsUpdateTime');
     const now = new Date().getTime();
     const twoHoursInMilliseconds = 2 * 60 * 60 * 1000;
@@ -247,10 +239,8 @@ function fetchAndDisplayNews(category = 'technology') {
     }
 }
 
-// Call on page load
 document.addEventListener('DOMContentLoaded', () => {
     fetchAndDisplayNews('technology');
 });
 
-// Call every 2 hours
 setInterval(() => fetchAndDisplayNews('technology'), 2 * 60 * 60 * 1000);
